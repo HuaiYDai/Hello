@@ -25,12 +25,11 @@ for toplist_id,toplist_name in toplist_url:
     print('当前榜单    '+toplist_name)
     url = f"https://music.163.com/discover/toplist?id={toplist_id}"
     response = requests.get(url,headers=headers)
-    # print(response.text)
-
+    #正则表达式匹配response中的音乐Id和title
     html_data = re.findall('<li><a href="/song\?id=(\d+)">(.*?)</a></li>',response.text)
 
     for music_id,title in html_data:
-        music_url = f"https://music.163.com/song/media/outer/url?id={music_id}.mp3" #网易云接口
+        music_url = f"https://music.163.com/song/media/outer/url?id={music_id}.mp3" #网易云歌曲接口
         music_content = requests.get(url = music_url,headers=headers).content
         if '/' in title:
             title = title.replace('/','&')
